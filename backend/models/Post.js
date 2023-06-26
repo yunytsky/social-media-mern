@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
-import { commentSchema } from "./Comment";
+import { commentSchema } from "./Comment.js";
 const { Schema } = mongoose;
 
 const postSchema = new Schema({
    text: String,
    likes: {
-      type: [ObjectId],
+      type: [mongoose.ObjectId],
       default: []
    },
    comments: {
@@ -17,5 +17,5 @@ const postSchema = new Schema({
 
 const Post = mongoose.model("Post", postSchema);
 
-export default postSchema;
+export default Post;
 export {postSchema};

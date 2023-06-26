@@ -7,7 +7,7 @@ const notificationSchema = new Schema({
    expireAt: {
       type: Date,
       expires: 60,
-      default: new Date(Date.now() + 604800000) // 604800000 = 7 days in ms
+      default: new Date(Date.now() + 604800000) // 604800000 == 7 days in ms
    }
 }, {timestamps: true});
 

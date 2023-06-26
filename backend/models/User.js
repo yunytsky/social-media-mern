@@ -1,15 +1,11 @@
 import mongoose from "mongoose";
-import { notificationSchema } from "./Notification";
-import {postSchema} from "./Post"
+import { notificationSchema } from "./Notification.js";
+import { postSchema } from "./Post.js"
 const {Schema} = mongoose;
 
-const personalInformationSchema = new Schema({
-   firstName: String,
-   lastName: String,
+const optionalInformationSchema = new Schema({
    country: String,
    town: String,
-   birthDate: Date,
-   about: String,
    profilePicture: {
       type: String,
       default: ""
@@ -22,6 +18,22 @@ const userSchema = new Schema({
       required: true,
       unique: true
    },
+   firstName: {
+      type: String,
+      required: true
+   },
+   lastName: {
+      type: String,
+      required: true
+   },
+   birthDate: {
+      type: Date,
+      required: true
+   },
+   sex: {
+      type: String,
+      required: true
+   },
    email: {
       type: String,
       required: true,
@@ -33,11 +45,11 @@ const userSchema = new Schema({
       min: 6
    },
    followers: {
-      type: [ObjectId],
+      type: [mongoose.ObjectId],
       default: []
    },
    following: {
-      type: [ObjectId],
+      type: [mongoose.ObjectId],
       default: []
    },
    notifications: {
@@ -48,7 +60,15 @@ const userSchema = new Schema({
       type: [postSchema],
       default: []
    },
-   personalInformation: personalInformationSchema
+   about: {
+      type: String,
+      default: ""
+   },
+   optionalInformation: optionalInformationSchema,
+   verified: {
+      type: Boolean,
+      default: false
+   }
 });
 
 const User = mongoose.model("User", userSchema);
