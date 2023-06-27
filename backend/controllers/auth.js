@@ -80,8 +80,8 @@ const verifyAccount = async (req, res) => {
 
       if (verificationEntity) {
          if (verificationEntity.code === req.body.code){
-            const user = await User.findOneAndUpdate({email: req.body.email}, {verified: true});
-            verificationEntity.deleteOne();
+            await User.findOneAndUpdate({email: req.body.email}, {verified: true});
+            await Verification.deleteOne({_id: verificationEntity._id});
             return res.status(200).json({ error: false, message: "Account has been verified" });
          }else{
             return res.status(403).json({ error: true, message: "Invalid verification code" });
@@ -136,7 +136,7 @@ const updatePassword = async (req, res) => {
       if (req.body.code === verificationEntity.code) {
          const newPassword = await generatePassword(req.body.newPassword);
          await User.findOneAndUpdate({email: req.body.email}, {password: newPassword})
-         verificationEntity.deleteOne();
+         await Verification.deleteOne({ _id: verificationEntity._id });
          return res.status(200).json({ error: false, message: "Password has been updated" });
       } else {
          return res.status(403).json({ error: true, message: "Wrong code" });

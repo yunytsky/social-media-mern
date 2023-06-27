@@ -27,6 +27,34 @@ const createPost = async (req, res) => {
    }
 }
 
+const deletePost = async (req,res) => {
+   try {
+      
+      const user = await User.findById(req.user.sub);
+      const post = await Post.findById(req.params.postId);
+
+      if (!user) {
+         return res.status(400).json({ error: true, message: "Bad request: user is not found" });
+      }else if(!post){
+         return res.status(400).json({ error: true, message: "Bad request: post is not found" });
+      }
+
+
+      if (post.author !== req.user.sub){
+         return res.status(403).json({ error: true, message: "Action forbidden" });
+      }
+
+      await Post.deleteOne({ _id: post._id });
+      await user.posts.splice(user.posts.indexOf(post), 1);
+      await user.save();
+
+      return res.status(200).json({ error: false, message: "Post has been removed" });
+
+   } catch (err) {
+      return res.status(500).json({ error: true, message: err.message });
+   }
+}
+
 const like = async (req, res) => {
    try{
       const post = await Post.findById(req.params.postId);
@@ -78,4 +106,4 @@ const comment = async (req, res) => {
 
 }
 
-export {createPost, like, comment};
+export { createPost, like, comment, deletePost };
