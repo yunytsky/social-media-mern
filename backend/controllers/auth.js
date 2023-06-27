@@ -66,7 +66,7 @@ const signup = async (req, res) => {
       await sendVerificationCode(req.body.email, "verification"); 
       await newUser.save();
 
-      return res.status(200).json({error: false, message: "To finish creating an account verify your email"})
+      return res.status(201).json({error: false, message: "To finish creating an account verify your email"})
 
    }catch(err){
       return res.status(500).json({ error: true, message: err.message })
@@ -106,7 +106,7 @@ const resendVerificationCode = async (req, res) => {
 const updateEmail = async (req, res) => {
    try{
       await User.findOneAndUpdate({ email: req.body.incorrectEmail }, { email: req.body.correctEmail });
-      await Verification.findOneAndDelete({email: req.body.incorrectEmail});
+      await Verification.deleteMany({email: req.body.incorrectEmail});
       await sendVerificationCode(req.body.correctEmail, "verification");
       return res.status(200).json({error: false, message: "Email has been successfully updated"});
    }catch(err){
@@ -114,6 +114,8 @@ const updateEmail = async (req, res) => {
    }
 }
 
+//change email for not verified users (if user made a mistake and provided the wrong email while signing
+//up but then left the page and went to forgotpassword page)
 const restorePassword = async (req, res) => {
    try{
       const user = await User.findOne({email: req.body.email});
@@ -134,6 +136,7 @@ const updatePassword = async (req, res) => {
       if (req.body.code === verificationEntity.code) {
          const newPassword = await generatePassword(req.body.newPassword);
          await User.findOneAndUpdate({email: req.body.email}, {password: newPassword})
+         verificationEntity.deleteOne();
          return res.status(200).json({ error: false, message: "Password has been updated" });
       } else {
          return res.status(403).json({ error: true, message: "Wrong code" });

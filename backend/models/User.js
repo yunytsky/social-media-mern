@@ -48,7 +48,7 @@ const userSchema = new Schema({
       type: [mongoose.ObjectId],
       default: []
    },
-   following: {
+   followings: {
       type: [mongoose.ObjectId],
       default: []
    },

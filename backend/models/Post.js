@@ -12,7 +12,11 @@ const postSchema = new Schema({
       type: [commentSchema],
       default: []
    },
-   picture: String
+   author: mongoose.ObjectId,
+   picture: {
+      type: String,
+      default: ""
+   }
 });
 
 const Post = mongoose.model("Post", postSchema);
