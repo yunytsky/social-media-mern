@@ -1,22 +1,44 @@
 import {RouterProvider, createBrowserRouter, Route, createRoutesFromElements} from "react-router-dom"
 import Login from "./pages/Login";
-import Header from "./components/Header";
-
+import Signup from "./pages/Signup";
+import RootLayout from "./layouts/RootLayout";
+import ResetPassword from "./pages/ResetPassword";
+import Verify from "./pages/Verify";
+import NewPassword from "./pages/NewPassword";
+import Home from "./pages/Home";
+import Feed from "./pages/Feed";
+import NotFound from "./pages/NotFound";
+import People from "./pages/People";
+import ExtendedProfile from "./pages/ExtendedProfile";
+import Profile from "./pages/Profile";
 
 const router = createBrowserRouter(
    createRoutesFromElements((
-      <Route path="/">
-         <Route index element={<Login/>}/>
+      <Route path="/" element={<RootLayout/>}>
+         <Route index element={<Home/>}/>
+         <Route path="auth">
+            <Route path="login" element={<Login/>}/>
+            <Route path="signup/" element={<Signup />} />
+            <Route path="verify" element={<Verify/>}/>
+            <Route path="reset-password" element={<ResetPassword />} />
+            <Route path="new-password" element={<NewPassword/>}/>
+         </Route>
+         <Route path=":userId">
+            <Route path="feed" element={<Feed/>}/>
+            <Route index element={<ExtendedProfile/>}/>
+            <Route path="people" element={<People/>}/>
+            <Route path="profile/:otherUserId" element={<Profile/>}/>
+         </Route>
+
+         <Route path="*" element={<NotFound/>}/>
       </Route>
    ))
 )
 
 function App() {
    return (
-      <div className="App">
-         
+      <div className="App ">
          <RouterProvider router={router}/>
-
       </div>
   )
 }
