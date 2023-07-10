@@ -1,5 +1,5 @@
 import Post from "../components/Post";
-import AddPost from "../components/AddPost";
+
 import SidebarLeft from "../components/SidebarLeft";
 import SidebarRight from "../components/SidebarRight";
 

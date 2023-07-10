@@ -11,11 +11,15 @@ import NotFound from "./pages/NotFound";
 import People from "./pages/People";
 import ExtendedProfile from "./pages/ExtendedProfile";
 import Profile from "./pages/Profile";
+import PrivateRoutes from "./utils/PrivateRoutes";
+import AddPost from "./pages/AddPost";
 
 const router = createBrowserRouter(
    createRoutesFromElements((
       <Route path="/" element={<RootLayout/>}>
+         
          <Route index element={<Home/>}/>
+
          <Route path="auth">
             <Route path="login" element={<Login/>}/>
             <Route path="signup/" element={<Signup />} />
@@ -23,11 +27,13 @@ const router = createBrowserRouter(
             <Route path="reset-password" element={<ResetPassword />} />
             <Route path="new-password" element={<NewPassword/>}/>
          </Route>
-         <Route path=":userId">
+
+         <Route path=":userId" element={<PrivateRoutes/>}>
             <Route path="feed" element={<Feed/>}/>
             <Route index element={<ExtendedProfile/>}/>
             <Route path="people" element={<People/>}/>
             <Route path="profile/:otherUserId" element={<Profile/>}/>
+            <Route path="add" element={<AddPost />} />
          </Route>
 
          <Route path="*" element={<NotFound/>}/>

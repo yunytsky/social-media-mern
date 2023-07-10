@@ -3,21 +3,24 @@ import {createSlice} from "@reduxjs/toolkit";
 const initialState = {
    user: null,
    token: null,
+   authorized: false,
    posts: [],
    notifications: []
 }
 
 const authSlice = createSlice({
-   name: auth,
+   name: "auth",
    initialState,
    reducers: {
       setLogin: (state, action) => {
          state.user = action.payload.user;
          state.token = action.payload.token;
+         state.authorized = action.payload.authorized;
       },
       setLogout: (state) => {
          state.user = null;
          state.token = null;
+         state.authorized = false;
       },
       setFollowers: (state, action) => {
          if(state.user) {
