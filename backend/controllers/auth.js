@@ -4,27 +4,26 @@ import { generatePassword, validatePassword, issueJWT, sendVerificationCode } fr
 
 const login = async (req, res) => {
    try{
-      //Check a user by usrename/email
-      let user;
-      if (req.body.username) {
-         user = await User.findOne({ username: req.body.username })
-      } else if (req.body.email) {
-         user = await User.findOne({ email: req.body.email })
-      }
+      //Check a user by email
+      const user = await User.findOne({ email: req.body.email })
+      
+
 
       //Check password if a user exists
       if (user && user.verified) {
          const match = await validatePassword(req.body.password, user.password);
          if (match) {
             const jwt = issueJWT(user);
-            return res.status(200).json({ error: false, message: "Successfully authorized", token: jwt.token });
+            const userResponse = user.toObject();
+            delete userResponse.password;
+            return res.status(200).json({ error: false, message: "Successfully authorized", token: jwt.token, user: userResponse });
          } else {
             return res.status(401).json({ error: true, message: "Wrong password" });
          }
       }else if(user && !user.verified){
          return res.status(401).json({error: false, message: "Account is not verified"});
       }else {
-         return res.status(401).json({ error: true, message: "Wrong email/username" });
+         return res.status(401).json({ error: true, message: "Wrong email" });
       }
 
    }catch(err){
@@ -33,34 +32,39 @@ const login = async (req, res) => {
 }
 
 const signup = async (req, res) => {
-
    try{
-
+      console.log("REQ")
       //Check if the user already exists 
       let existingUser;
       existingUser = await User.findOne({username: req.body.username});
       if(existingUser){
-         return res.status(409).json({ error: false, message: "Username is already taken" })
+         return res.status(409).json({ error: true, message: "Username is already taken" })
       }
       existingUser = await User.findOne({ email: req.body.email });
       if (existingUser) {
-         return res.status(409).json({ error: false, message: "This email is already used" })
+         return res.status(409).json({ error: true, message: "This email is already used" })
+      }
+
+      //Check if password and password's confirmation match
+      if(req.body.password !== req.body.confirmation){
+         return res.status(400).json({ error: true, message: "Passwords do not match" })
+
       }
 
       //Create a new user
       const password = await generatePassword(req.body.password);
 
       const newUser = new User({
-         firstName: req.body.firstName,
-         lastName: req.body.lastName,
-         username: req.body.username,
+         email: req.body.email,
+         firstName: req.body.firstname,
+         lastName: req.body.lastname,
          password: password,
-         birthDate: req.body.birthDate,
+         confirmation: confirmation,
+         birthday: req.body.birthday,
          sex: req.body.sex,
          country: req.body.country,
-         town: req.body.town,
-         about: req.body.about,
-         email: req.body.email
+         city: req.body.city,
+         about: req.body.about
       })
 
       await sendVerificationCode(req.body.email, "verification"); 

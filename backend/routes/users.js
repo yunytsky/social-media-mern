@@ -4,8 +4,8 @@ import { verifyJWT } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.get("/:id", verifyJWT, getSingleUser);
-router.get("/", verifyJWT, getAllUsers);
+router.get("/:id",getSingleUser);
+router.get("/", getAllUsers);
 router.get("/:id/followers", verifyJWT, getFollowers);
 router.get("/:id/followings", verifyJWT, getFollowings);
 

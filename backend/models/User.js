@@ -5,7 +5,7 @@ const {Schema} = mongoose;
 
 const optionalInformationSchema = new Schema({
    country: String,
-   town: String,
+   city: String,
    profilePicture: {
       type: String,
       default: ""
@@ -13,20 +13,15 @@ const optionalInformationSchema = new Schema({
 })
 
 const userSchema = new Schema({
-   username: {
-      type: String,
-      required: true,
-      unique: true
-   },
-   firstName: {
+   firstname: {
       type: String,
       required: true
    },
-   lastName: {
+   lastname: {
       type: String,
       required: true
    },
-   birthDate: {
+   birthday: {
       type: Date,
       required: true
    },
@@ -56,10 +51,7 @@ const userSchema = new Schema({
       type: [notificationSchema],
       default: []
    },
-   posts: {
-      type: [postSchema],
-      default: []
-   },
+   posts: [{type: Schema.Types.ObjectId, ref: "Post", default: []}],
    about: {
       type: String,
       default: ""
