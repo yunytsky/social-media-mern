@@ -1,18 +1,19 @@
 import {RouterProvider, createBrowserRouter, Route, createRoutesFromElements} from "react-router-dom"
 import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import Signup, { signupLoader } from "./pages/Signup";
 import RootLayout from "./layouts/RootLayout";
 import ResetPassword from "./pages/ResetPassword";
 import Verify from "./pages/Verify";
 import NewPassword from "./pages/NewPassword";
 import Home from "./pages/Home";
-import Feed from "./pages/Feed";
+import Feed, { feedLoader } from "./pages/Feed";
 import NotFound from "./pages/NotFound";
 import People from "./pages/People";
 import ExtendedProfile from "./pages/ExtendedProfile";
 import Profile from "./pages/Profile";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import AddPost from "./pages/AddPost";
+import Error505 from "./pages/Error505";
 
 const router = createBrowserRouter(
    createRoutesFromElements((
@@ -22,14 +23,14 @@ const router = createBrowserRouter(
 
          <Route path="auth">
             <Route path="login" element={<Login/>}/>
-            <Route path="signup/" element={<Signup />} />
+            <Route path="signup/" element={<Signup />} loader={signupLoader} />
             <Route path="verify" element={<Verify/>}/>
             <Route path="reset-password" element={<ResetPassword />} />
             <Route path="new-password" element={<NewPassword/>}/>
          </Route>
 
          <Route path=":userId" element={<PrivateRoutes/>}>
-            <Route path="feed" element={<Feed/>}/>
+            <Route path="feed" element={<Feed />} loader={feedLoader}/>
             <Route index element={<ExtendedProfile/>}/>
             <Route path="people" element={<People/>}/>
             <Route path="profile/:otherUserId" element={<Profile/>}/>

@@ -9,9 +9,19 @@ const Home = () => {
             <Link to="https://github.com/yunytsky" target="_blank" className="mb-5">
                <img src={githubIcon} alt="github" className="opacity-80 w-14 h-14 sm:w-16 sm:h-16" />
             </Link>
-            <Link to="auth/login" className="align-middle font-mono">
-               <button className="opacity-80 rounded-md bg-white text-center px-3 sm:px-8 py-0.5 text-sm sm:text-base font-semibold leading-6 text-gray-900 hover:bg-gray-100 active:bg-gray-200">Get started</button>
-            </Link>
+
+            <div >
+               <Link to="auth/login" className="align-middle font-mono hidden sm:block ">
+                  <button className="opacity-80 rounded-md bg-white text-center px-3 sm:px-8 py-0.5 sm:py-1 text-sm sm:text-base font-semibold leading-6 text-gray-900 hover:bg-gray-100 active:bg-gray-200">Get started</button>
+               </Link>
+               <Link to="auth/login" className="align-middle font-mono sm:hidden">
+                  <button className="w-[5rem] opacity-80 rounded-md bg-white text-center px-2 py-0.5 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100 active:bg-gray-200 mr-3">Log In</button>
+               </Link>
+               <Link to="auth/login" className="align-middle font-mono sm:hidden ">
+                  <button className="w-[5rem] opacity-80 rounded-md bg-white text-center px-2 py-0.5 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100 active:bg-gray-200">Sign Up</button>
+               </Link>
+            </div>
+
          </div>
 
       </div>

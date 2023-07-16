@@ -7,20 +7,24 @@ const loginSchema = yup.object().shape({
 
 const signupSchema = yup.object().shape({
    email: yup.string().email().required("Required"),
-   firstName: yup.string().max(15, "Must be less than 15 characters").required("Required"),
-   lastName: yup.string().max(30, "Must be less than 30 characters").required("Required"),
+   firstname: yup.string().max(15, "Must be less than 15 characters").required("Required"),
+   lastname: yup.string().max(30, "Must be less than 30 characters").required("Required"),
    username: yup.string().max(30, "Must be less than 30 characters").required("Required"),
    password: yup.string().min(5, "Provide minimum 5 characters").required("Required"),
-   confirmPassword: yup.string().required("Required").oneOf([yup.ref("password")]),
+   confirmation: yup.string().required("Required").oneOf([yup.ref("password"), null], "Password doesn't match"),
    country: yup.string(),
-   town: yup.string(),
+   city: yup.string(),
    birthday: yup.date().required("Required"),
-   aboutMe: yup.string().max(250, "Must be less than 250 characters"),
+   about: yup.string().max(250, "Must be less than 250 characters"),
    sex: yup.string().required("Required")
 });
 
 const verificationSchema = yup.object().shape({
    code: yup.number().max(6).required()
 });
+
+const postSchema = yup.object().shape({
+   text: yup.string().max(1000, "Must be less than 1000 characters"),
+})
 
 export {loginSchema, signupSchema};

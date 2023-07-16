@@ -27,12 +27,9 @@ const PrivateRoutes = () => {
                setIsLoading(false);
             })
             .catch((err) => {
-               dispatch(setLogout()); //sets token and user states to null as well as authorized to false 
-               //(authorized redux state is used to determine what kind of headr should be loaded)
-
+               dispatch(setLogout()); 
                setAuth(false);
                setIsLoading(false);
-               console.log(err)
             })
          
       }else{

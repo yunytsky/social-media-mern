@@ -1,5 +1,5 @@
 import {Link, useNavigate} from "react-router-dom";
-import Axios from "axios";
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import {setLogin} from "../redux/authSlice"
 import {  useState } from "react";
@@ -14,9 +14,8 @@ const Login = () => {
 
    const handleSubmit = async (values, actions) => {
       try {
-         
          const url = import.meta.env.VITE_API_URL + "auth/log-in";
-         const response = await Axios({
+         const response = await axios({
             method: "POST",
             data: {
                email: values.email,

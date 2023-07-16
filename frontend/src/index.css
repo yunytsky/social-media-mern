@@ -76,11 +76,9 @@ textarea {
 
 .logo::before{
    content: ' ';
-   width: 12px;
-   height: 12px;
+   width: 11px;
+   height: 11px;
    position: absolute;
-   left: -18%;
-   top: 34%;
    border-radius: 50%;
    background-color: var(--green-400);
 }
@@ -92,12 +90,39 @@ h1{
 #code{
    letter-spacing: 0.75rem;
 }
-#icon:hover{
-   filter: invert(55%) sepia(82%) saturate(434%) hue-rotate(89deg) brightness(98%) contrast(92%);
+
+#upload-image:hover>img, #upload-image:hover>span{
+   font-weight: 600;
+   filter: brightness(0%) invert(55%) sepia(82%) saturate(434%) hue-rotate(89deg) brightness(98%) contrast(92%);
 }
-#icon:active{
+
+#upload-image:active>img, #upload-image:active>span{
+   font-weight: 600;
    filter: brightness(0%) invert(44%) sepia(98%) saturate(691%) hue-rotate(101deg) brightness(88%) contrast(83%);
+   
 }
+
+/* Overwrite Tailwind to fix in Chrome */
+#header-links {
+   display: none;
+}
+
+#header-user {
+   display: none;
+}
+
+@media (min-width: 640px) {
+   #header-links {
+      display: block;
+   }
+   #header-user{
+      display: block;
+   }
+}
+
+
+
+
 
 
 /* #notification::after{
